@@ -1,7 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from './components/Search';
 import Slider from './components/Slider';
 import './App.css';
+
+function getVideosPerPage() {
+  const screenWidth = window.innerWidth;
+  switch (true) {
+    case screenWidth >= 1280:
+      return 4;
+    case screenWidth >= 910:
+      return 3;
+    case screenWidth >= 610:
+      return 2;
+    default:
+      return 1;
+  }
+}
+
+function debounce(func, ms) {
+  let timer;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      func.apply(this);
+    }, ms);
+  };
+}
 
 function App() {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -9,22 +34,17 @@ function App() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
-  function getVideosPerPage() {
-    const screenWidth = window.innerWidth;
-    switch (true) {
-      case screenWidth >= 1280:
-        return 4;
-      case screenWidth >= 910:
-        return 3;
-      case screenWidth >= 610:
-        return 2;
-      default:
-        return 1;
-    }
-  }
-
   const [videosPerPage, setVideosPerPage] = useState(() => getVideosPerPage());
+
+  useEffect(() => {
+    function handleResize() {
+      setVideosPerPage(() => getVideosPerPage());
+    }
+    const debouncedHandleResize = debounce(handleResize, 500);
+
+    window.addEventListener('resize', debouncedHandleResize);
+    return () => window.removeEventListener('resize', debouncedHandleResize);
+  });
 
   const indexOfLastVideo = currentPage * videosPerPage;
   const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
