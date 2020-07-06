@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+import videos from "./videos";
+import Search from "./components/Search";
+import Slider from "./components/Slider";
 import './App.css';
 
 function App() {
-  return (
+    const searchParams = {
+        keyword: '',
+        nextPageToken: null,
+    };
+
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <header className="App__header">
+            <Search searchParams={searchParams}/>
+        </header>
+        <main>
+            <Slider
+                videos = {videos}
+            />
+        </main>
+        <footer className="App__footer">
+            <p>Made with <span role="img" aria-label="love">💜</span> by <a href="mailto:oserovao@ya.ru">Olga Serova</a></p>
+        </footer>
     </div>
-  );
+    );
 }
 
 export default App;
