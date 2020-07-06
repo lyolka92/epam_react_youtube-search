@@ -48,7 +48,8 @@ SliderVideo.propTypes = {
     description: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    viewCount: PropTypes.number.isRequired,
+    viewCount: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

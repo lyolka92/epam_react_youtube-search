@@ -50,7 +50,7 @@ function Search({
 
 Search.propTypes = {
   setSearchKeyword: PropTypes.func.isRequired,
-  setNextPageToken: PropTypes.number.isRequired,
+  setNextPageToken: PropTypes.func.isRequired,
   setLoading: PropTypes.func.isRequired,
   setVideos: PropTypes.func.isRequired,
   searchKeyword: PropTypes.string,
