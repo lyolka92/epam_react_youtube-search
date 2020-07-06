@@ -1,18 +1,29 @@
 import React from "react";
+import {getVideosByKeyword} from "../api/search-service";
 import "./Search.css";
 
-function Search() {
+function Search(props) {
     return (
-        <form className="Search">
-            <input
-                className="Search__input"
-                type="text"
-                placeholder="Search on YouTube 🦄"
+        <form className="Search"
+            onSubmit={async event => {
+                event.preventDefault();
+
+                props.setLoading(true);
+
+                const searchResult = await getVideosByKeyword(props.searchKeyword);
+                props.setNextPageToken(searchResult.nextPageToken);
+                props.setVideos(searchResult.items);
+
+                props.setLoading(false);
+                }
+            }>
+            <input className="Search__input"
+                   type="text"
+                   placeholder="Search on YouTube 🦄"
+                   value={props.searchKeyword}
+                   onChange={event => props.setSearchKeyword(event.target.value)}
             />
-            <button
-                className="Search__btn"
-                type="submit"
-                aria-label="search">
+            <button className="Search__btn" type="submit" aria-label="search">
                 <svg
                     className="Search__icon"
                     viewBox="0 0 24 24"

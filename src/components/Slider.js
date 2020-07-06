@@ -4,6 +4,18 @@ import SliderPagination from "./SliderPagination";
 import "./Slider.css";
 
 function Slider(props) {
+    if (props.loading) {
+        return (
+            <div className="Slider Slider__empty">
+                <p>
+                    <span role="img" aria-label="stars">✨</span>
+                    Magic is happening
+                    <span role="img" aria-label="stars">✨</span>
+                </p>
+            </div>
+        )
+    }
+
     if (props.videos.length === 0) {
         return (
             <div className="Slider Slider__empty">
@@ -14,6 +26,7 @@ function Slider(props) {
         )
     }
 
+    // Temp
     const currentPageNumbers = [1, 2, 3];
 
     return (
