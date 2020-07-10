@@ -1,41 +1,76 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
+import Loader from "./Loader";
+import SearchPlaceholder from "./SearchPlaceholder";
 import SliderVideo from './SliderVideo';
 import SliderPagination from './SliderPagination';
+import {useDispatch, useSelector} from "react-redux";
+import {updateSliderParams} from "../redux/actions/actions";
+import {useSwipeable} from "react-swipeable";
 import './Slider.css';
 
-function Slider({
-  loading, videos, totalVideosCount, videosPerPage, currentPage, setCurrentPage,
-}) {
+function debounce(func, ms) {
+  let timer;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      func.apply(this);
+    }, ms);
+  };
+}
+
+function Slider() {
+  const loading = useSelector(state => state.isLoading);
+  const videos = useSelector(state => state.videos);
+  const videosPerPage = useSelector(state => state.sliderParams?.videosPerPage);
+  const currentPageNumber = useSelector(state => state.sliderParams?.currentPageNumber);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    function handleResize() {
+      dispatch(updateSliderParams());
+    }
+
+    const debouncedHandleResize = debounce(handleResize, 1000);
+    window.addEventListener('resize', debouncedHandleResize);
+    return () => window.removeEventListener('resize', debouncedHandleResize);
+  });
+
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: () => {
+      if (currentPageNumber > 1) {
+        const nextPageNumber = currentPageNumber - 1;
+        dispatch(updateSliderParams(nextPageNumber));
+      }
+    },
+    onSwipedLeft: () => {
+      const nextPageNumber = currentPageNumber + 1;
+      dispatch(updateSliderParams(nextPageNumber));
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   if (loading) {
-    return (
-      <div className="Slider Slider__empty">
-        <p>
-          <span role="img" aria-label="stars">✨</span>
-          Magic is happening
-          <span role="img" aria-label="stars">✨</span>
-        </p>
-      </div>
-    );
+    return <Loader />;
   }
 
-  if (totalVideosCount === 0) {
-    return (
-      <div className="Slider Slider__empty">
-        <p>
-          There is no videos yet.
-          <br />
-          Try to search something magical
-          <span role="img" aria-label="stars">✨</span>
-        </p>
-      </div>
-    );
+  if (Object.values(videos).length === 0) {
+    return <SearchPlaceholder searchEntity="videos" />
   }
+
+  if (videosPerPage === 0) {
+    dispatch(updateSliderParams());
+  }
+
+  const indexOfLastVideo = currentPageNumber * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos = Object.values(videos).slice(indexOfFirstVideo, indexOfLastVideo);
 
   return (
-    <div className="Slider">
+    <div className="Slider" {...swipeHandlers}>
       <div className="Slider-videos">
-        {videos.map((video) => (
+        {currentVideos.map((video) => (
           <SliderVideo
             videoInfo={video}
             key={video.id}
@@ -43,31 +78,10 @@ function Slider({
         ))}
       </div>
       <nav className="Slider-pagination">
-        <SliderPagination
-          totalVideosCount={totalVideosCount}
-          videosPerPage={videosPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <SliderPagination />
       </nav>
     </div>
   );
 }
-
-Slider.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  videos: PropTypes.arrayOf(PropTypes.object),
-  totalVideosCount: PropTypes.number,
-  videosPerPage: PropTypes.number,
-  currentPage: PropTypes.number,
-  setCurrentPage: PropTypes.func.isRequired,
-};
-
-Slider.defaultProps = {
-  videos: [],
-  totalVideosCount: 0,
-  videosPerPage: 0,
-  currentPage: 0,
-};
 
 export default Slider;

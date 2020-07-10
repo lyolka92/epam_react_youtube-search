@@ -1,35 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from "react-redux";
+import {updateSliderParams} from "../redux/actions/actions";
 import './Slider.css';
 
-function SliderPagination({
-  totalVideosCount, videosPerPage, currentPage, setCurrentPage,
-}) {
-  const pageNumbers = [];
+function SliderPagination() {
+  const currentPageNumber = useSelector(state => state.sliderParams?.currentPageNumber);
+  const lastAvailablePage = useSelector(state => state.sliderParams?.lastAvailablePage);
+  const dispatch = useDispatch();
 
-  for (let i = 1; i <= Math.ceil(totalVideosCount / videosPerPage); i += 1) {
-    pageNumbers.push(i);
-  }
+  const availablePageNumbers = [...Array(lastAvailablePage).keys()].map(i => i + 1);
+  const firstPageIndexToRender = currentPageNumber === 1 ? 0 : currentPageNumber - 2;
+  const pageNumbersToRender = availablePageNumbers.slice(firstPageIndexToRender, currentPageNumber + 1);
 
-  const getButtonClassNames = (pageNumber) => {
-    const classes = ['Slider-pagination__item-button'];
-    if (pageNumber === currentPage) {
-      classes.push('Slider-pagination__item-button__active');
-    }
-    return classes.join(' ');
-  };
+  const handleClick = pageNumber => dispatch(updateSliderParams(pageNumber));
 
   return (
     <ul className="Slider-pagination__list">
-      {pageNumbers.map((pageNumber) => (
+      {pageNumbersToRender.map((pageNumber) => (
         <li
           className="Slider-pagination__item"
           key={pageNumber}
         >
           <button
-            className={getButtonClassNames(pageNumber)}
+            className={
+              pageNumber === currentPageNumber
+                  ? 'Slider-pagination__item-button Slider-pagination__item-button__active'
+                  : 'Slider-pagination__item-button'
+            }
             type="button"
-            onClick={() => setCurrentPage(pageNumber)}
+            onClick={() => handleClick(pageNumber)}
           >
             {pageNumber}
           </button>
@@ -38,12 +37,5 @@ function SliderPagination({
     </ul>
   );
 }
-
-SliderPagination.propTypes = {
-  totalVideosCount: PropTypes.number.isRequired,
-  videosPerPage: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired,
-};
 
 export default SliderPagination;

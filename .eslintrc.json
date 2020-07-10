@@ -3,9 +3,26 @@
         "browser": true,
         "es2020": true
     },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass",
+            "pragma": "React",
+            "version": "detect",
+            "flowVersion": "0.53"
+        },
+        "propWrapperFunctions": [
+            "forbidExtraProps",
+            {"property": "freeze", "object": "Object"},
+            {"property": "myFavoriteWrapper"}
+        ],
+        "linkComponents": [
+            "Hyperlink",
+            {"name": "Link", "linkAttribute": "to"}
+        ]
+    },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "eslint:recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -19,6 +36,8 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "import/prefer-default-export": "off",
         "no-use-before-define": "off"
     }
