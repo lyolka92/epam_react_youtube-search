@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import Loader from "./Loader";
-import SearchPlaceholder from "./SearchPlaceholder";
-import SliderVideo from './SliderVideo';
-import SliderPagination from './SliderPagination';
+import Loader from "../Loader/Loader";
+import SearchPlaceholder from "../Search/subComponents/SearchPlaceholder";
+import SliderVideo from './subComponents/SliderVideo';
+import SliderPagination from './subComponents/SliderPagination';
 import {useDispatch, useSelector} from "react-redux";
-import {updateSliderParams} from "../redux/actions/actions";
+import {updateSliderParams} from "../../redux/actions/actions";
 import {useSwipeable} from "react-swipeable";
 import './Slider.css';
 

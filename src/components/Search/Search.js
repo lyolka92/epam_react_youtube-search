@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {updateSearchParams} from "../redux/actions/actions";
-import {searchVideos} from "../redux/middleware/middleware";
+import {updateSearchParams} from "../../redux/actions/actions";
+import {searchVideos} from "../../redux/middleware/middleware";
 import './Search.css';
 
 export default function Search() {

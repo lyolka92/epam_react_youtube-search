@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import hexToRgba from 'hex-to-rgba';
-import './Slider.css';
+import '../Slider.css';
 
 function SliderVideo({ videoInfo }) {
   const getRandomColorHex = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;

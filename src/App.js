@@ -1,7 +1,7 @@
 import React from 'react';
-import Search from './components/Search';
-import Slider from './components/Slider';
-import {Footer} from "./components/Footer";
+import Search from './components/Search/Search';
+import Slider from './components/Slider/Slider';
+import {Footer} from "./components/Footer/Footer";
 import './App.css';
 
 function App() {

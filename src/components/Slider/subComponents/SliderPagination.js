@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {updateSliderParams} from "../redux/actions/actions";
-import './Slider.css';
+import {updateSliderParams} from "../../../redux/actions/actions";
+import '../Slider.css';
 
 function SliderPagination() {
   const currentPageNumber = useSelector(state => state.sliderParams?.currentPageNumber);
