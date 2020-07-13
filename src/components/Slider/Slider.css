@@ -19,82 +19,7 @@
     height: 90%;
 }
 
-.Slider-video {
-    position: relative;
-    flex-basis: 450px;
-    margin-right: 2rem;
-
-    display: flex;
-    flex-direction: column;
-
-    border-radius: 3rem;
-    border: none;
-}
-
-.Slider-video:last-child {
-    margin-right: 0;
-}
-
-.Slider-video__header {
-    position: relative;
-    flex-basis: 320px;
-    flex-shrink: 3;
-    margin: 0;
-
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    border-radius: 3rem 3rem 0 0;
-}
-
-.Slider-video__header h2 {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 100%;
-
-    background-color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    word-break: break-word;
-}
-
-.Slider-video__header a {
-    display: inline-block;
-
-    width: 100%;
-    height: 100%;
-    padding: 1rem 0;
-
-    color: rgb(103,76,193);
-}
-
-.Slider-video__header a:hover {
-    color: rgb(162, 139, 252);
-}
-
-.Slider-video__info {
-    height: calc(100% - 320px);
-    padding: 2rem;
-
-    border-radius: 0 0 3rem 3rem;
-    overflow: scroll;
-}
-
-.Slider-video__info ul {
-    margin: 0;
-    padding-bottom: 1rem;
-    padding-left: 0;
-
-    list-style: none;
-    border-bottom: 4px dotted;
-}
-
-.Slider-video__info__description {
-    padding-top: 1rem;
-    word-break: break-word;
-}
+/*---*/
 
 .Slider-video__info__author:before {
     content: "👩🏻‍🎤 ";
@@ -107,6 +32,8 @@
 .Slider-video__info__viewCount:before {
     content: "👁‍ ";
 }
+
+/*---*/
 
 .Slider-pagination {
     display: flex;

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import hexToRgba from 'hex-to-rgba';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import {SliderVideoHeader} from "./SliderVideoHeader";
+import {SliderVideoInfo} from "./SliderVideoInfo";
 import '../Slider.css';
+
+const DESCRIPTION_LENGTH = 300;
 
 function SliderVideo({ videoInfo }) {
   const getRandomColorHex = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -9,33 +15,41 @@ function SliderVideo({ videoInfo }) {
   const randomColorRgb01 = hexToRgba(randomColorHex, 0.1);
   const randomColorRgb05 = hexToRgba(randomColorHex, 0.5);
 
-  const videoCardStyle = {
-    backgroundImage: `linear-gradient(${randomColorRgb01}, ${randomColorRgb05}),
-        linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.5)),
-        url(${videoInfo.imgUrl})`,
-  };
-
   const uploadDate = new Date(videoInfo.uploadDate).toLocaleDateString();
-  const DESCRIPTION_LENGTH = 300;
   const cutDescription = `${videoInfo.description.slice(0, DESCRIPTION_LENGTH)}...`;
 
+  const style = css`
+    position: relative;
+    flex-basis: 450px;
+    margin-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3rem;
+    border: none;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  `;
+
   return (
-    <div className="Slider-video">
-      <div className="Slider-video__header" style={videoCardStyle}>
-        <h2>
-          <a href={videoInfo.videoUrl}>{videoInfo.title}</a>
-        </h2>
-      </div>
-      <div className="Slider-video__info" style={{ backgroundColor: randomColorRgb01 }}>
-        <ul
-          style={{ borderBottomColor: randomColorRgb05 }}
-        >
-          <li className="Slider-video__info__author">{videoInfo.author}</li>
-          <li className="Slider-video__info__uploadDate">{uploadDate}</li>
-          <li className="Slider-video__info__viewCount">{videoInfo.viewCount}</li>
-        </ul>
-        <p className="Slider-video__info__description">{cutDescription}</p>
-      </div>
+    <div css={style}>
+      <SliderVideoHeader
+          randomColorRgb01={randomColorRgb01}
+          randomColorRgb05={randomColorRgb05}
+          videoCoverUrl={videoInfo.imgUrl}
+          videoUrl={videoInfo.videoUrl}
+          videoTitle={videoInfo.title}
+
+      />
+      <SliderVideoInfo
+          randomColorRgb01={randomColorRgb01}
+          randomColorRgb05={randomColorRgb05}
+          videoAuthor={videoInfo.author}
+          videoUploadDate={uploadDate}
+          videoViewCount={videoInfo.viewCount || '?'}
+          videoDescription={cutDescription}
+      />
     </div>
   );
 }
