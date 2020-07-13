@@ -47,7 +47,7 @@ function searchVideos(searchKeyword, nextPageToken) {
                 const searchResult = await getVideosByKeyword(searchKeyword, nextPageToken);
                 dispatch(updateSearchParams(searchResult.keyword, searchResult.nextPageToken));
                 dispatch(setVideos(searchResult.items));
-                dispatch(updateSliderParams());
+                dispatch(updateSliderParams(1));
 
                 dispatch(toggleLoading());
             } else {
