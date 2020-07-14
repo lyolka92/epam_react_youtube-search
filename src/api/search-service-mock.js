@@ -1,6 +1,6 @@
 import {mockData} from "../videos";
 
-export async function getVideosByKeyword(searchRequest, pageToken) {
+export async function getVideosByKeyword(searchRequest) {
     const searchResult = await new Promise(resolve => {
         resolve(mockData);
     });
@@ -19,7 +19,7 @@ function mapVideosInfo(videos) {
             title, channelTitle: author, publishedAt: uploadDate, description,
         } = video.snippet;
         const imgUrl = video.snippet?.thumbnails?.high?.url;
-        const { id: videoId } = video;
+        const videoId = video.id?.videoId;
 
         return {
             title,
