@@ -21,8 +21,8 @@
         ]
     },
     "extends": [
-        "plugin:react/recommended",
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -32,13 +32,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "emotion"
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "react/jsx-uses-react": "error",
+        "react/jsx-uses-react": 1,
         "react/jsx-uses-vars": "error",
         "import/prefer-default-export": "off",
-        "no-use-before-define": "off"
+        "no-use-before-define": "off",
+        "emotion/jsx-import": "error",
+        "emotion/no-vanilla": "error",
+        "emotion/import-from-emotion": "error",
+        "emotion/styled-import": "error"
     }
 }

@@ -1,14 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import PropTypes from "prop-types";
 
 const propTypes = {
     randomColorRgb01: PropTypes.string.isRequired,
     randomColorRgb05: PropTypes.string.isRequired,
     videoCoverUrl: PropTypes.string.isRequired,
-    videoUrl: PropTypes.string.isRequired,
-    videoTitle: PropTypes.string.isRequired,
+    children: PropTypes.any
+}
+
+const defaultProps = {
+    children: ''
 }
 
 export const SliderVideoHeader = props => {
@@ -50,11 +52,10 @@ export const SliderVideoHeader = props => {
 
     return (
         <div css={style}>
-            <h2>
-                <a href={props.videoUrl}>{props.videoTitle}</a>
-            </h2>
+            {props.children}
         </div>
     )
 }
 
 SliderVideoHeader.propTypes = propTypes;
+SliderVideoHeader.defaultProps = defaultProps;
