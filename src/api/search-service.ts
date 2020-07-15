@@ -1,10 +1,13 @@
-const apiUrl = 'https://www.googleapis.com/youtube/v3/';
+const apiUrl = "https://www.googleapis.com/youtube/v3/";
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export async function getVideosByKeyword(searchRequest, pageToken) {
+export async function getVideosByKeyword(
+  searchRequest: string,
+  pageToken?: string
+) {
   let videos;
 
-  const pageTokenQuery = pageToken ? `&pageToken=${pageToken}` : '';
+  const pageTokenQuery = pageToken ? `&pageToken=${pageToken}` : "";
   const url = `${apiUrl}search?$key=${apiKey}&type=video&part=snippet&maxResults=15&q=${searchRequest}${pageTokenQuery}`;
 
   const response = await fetch(url);
@@ -20,17 +23,17 @@ export async function getVideosByKeyword(searchRequest, pageToken) {
   return {
     nextPageToken: videos.nextPageToken,
     keyword: searchRequest,
-    items: mapVideosInfo(videosWithStats),
+    items: mapVideosInfo(videosWithStats.items),
   };
 }
 
-async function getVideosStats(videos) {
+async function getVideosStats(videos: any[]) {
   const videoIds = videos.map((video) => video.id.videoId);
   const [videoStats] = await Promise.all([getVideoStatsById(videoIds)]);
   return videoStats;
 }
 
-async function getVideoStatsById(videoId) {
+async function getVideoStatsById(videoId: any[]) {
   const url = `${apiUrl}videos?$key=${apiKey}&id=${videoId}&part=snippet,statistics`;
   const response = await fetch(url);
   let videoStats;
@@ -44,13 +47,41 @@ async function getVideoStatsById(videoId) {
   return videoStats;
 }
 
-function mapVideosInfo(videos) {
-  return videos.items.map((video) => {
+interface youTubeVideoWithStats {
+  id: string;
+  snippet: {
+    publishedAt: string;
+    title: string;
+    description: string;
+    channelTitle: string;
+    thumbnails: {
+      high: {
+        url: string;
+      };
+    };
+  };
+  statistics: {
+    viewCount: string;
+  };
+}
+
+function mapVideosInfo(videos: youTubeVideoWithStats[]) {
+  return videos.map((video) => {
     const {
-      title, channelTitle: author, publishedAt: uploadDate, description,
+      title,
+      channelTitle: author,
+      publishedAt,
+      description,
     } = video.snippet;
-    const imgUrl = video.snippet?.thumbnails?.high?.url;
-    const { id: videoId, statistics: { viewCount } } = video;
+    const {
+      id,
+      statistics: { viewCount: views },
+    } = video;
+
+    const videoUrl = new URL(`https://youtu.be/${id}`);
+    const imgUrl = new URL(`${video.snippet?.thumbnails?.high?.url}`);
+    const uploadDate = new Date(publishedAt).toLocaleDateString();
+    const viewCount = +views;
 
     return {
       title,
@@ -58,8 +89,8 @@ function mapVideosInfo(videos) {
       uploadDate,
       description,
       imgUrl,
-      id: videoId,
-      videoUrl: `https://youtu.be/${videoId}`,
+      id,
+      videoUrl,
       viewCount,
     };
   });
