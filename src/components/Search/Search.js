@@ -1,10 +1,10 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {updateSearchParams} from "../../redux/actions/actions";
-import {searchVideos} from "../../redux/middleware/middleware";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSearchParams } from "../../redux/actions/actions";
+import { searchVideos } from "../../redux/middleware/middleware";
 import './Search.css';
 
-export default function Search() {
+export function Search() {
   const searchKeyword = useSelector(state => state.searchParams.keyword);
   const nextPageToken = useSelector(state => state.searchParams.nextPageToken);
   const dispatch = useDispatch();

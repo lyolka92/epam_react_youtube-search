@@ -1,9 +1,9 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {updateSliderParams} from "../../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSliderParams } from "../../../redux/actions/actions";
 import '../Slider.css';
 
-function SliderPagination() {
+export function SliderPagination() {
   const currentPageNumber = useSelector(state => state.sliderParams?.currentPageNumber);
   const lastAvailablePage = useSelector(state => state.sliderParams?.lastAvailablePage);
   const dispatch = useDispatch();
@@ -37,5 +37,3 @@ function SliderPagination() {
     </ul>
   );
 }
-
-export default SliderPagination;

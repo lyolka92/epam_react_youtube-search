@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Loader from "../Loader/Loader";
+import { Loader } from "../Loader/Loader";
 import { SliderPlaceholder } from "./subComponents/SliderPlaceholder";
-import SliderVideo from './subComponents/SliderVideo';
-import SliderPagination from './subComponents/SliderPagination';
+import { SliderVideo } from './subComponents/SliderVideo';
+import { SliderPagination } from './subComponents/SliderPagination';
 import { useDispatch, useSelector } from "react-redux";
 import { updateSliderParams } from "../../redux/actions/actions";
 import { useSwipeable } from "react-swipeable";

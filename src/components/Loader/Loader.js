@@ -1,6 +1,6 @@
 import React from "react";
 
-function Loader() {
+export function Loader() {
     return (
         <div className="Slider Slider__empty">
             <p>
@@ -11,5 +11,3 @@ function Loader() {
         </div>
     );
 }
-
-export default Loader;

@@ -8,7 +8,7 @@ import '../Slider.css';
 
 const DESCRIPTION_LENGTH = 300;
 
-function SliderVideo({ videoInfo }) {
+export function SliderVideo({ videoInfo }) {
   const getRandomColorHex = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   const randomColorHex = getRandomColorHex();
   const randomColorRgb01 = hexToRgba(randomColorHex, 0.1);
@@ -66,5 +66,3 @@ SliderVideo.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
 };
-
-export default SliderVideo;
