@@ -23,3 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# mockdata
+/src/videos.js
+/src/api/search-service-mock.js
