@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function SearchPlaceholder({searchEntity}) {
+export function SliderPlaceholder({searchEntity}) {
     return (
         <div className="Slider Slider__empty">
             <p>
@@ -14,8 +14,6 @@ function SearchPlaceholder({searchEntity}) {
     );
 }
 
-SearchPlaceholder.propTypes = {
+SliderPlaceholder.propTypes = {
     searchEntity: PropTypes.string.isRequired,
 }
-
-export default SearchPlaceholder;

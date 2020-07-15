@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Loader from "../Loader/Loader";
-import SearchPlaceholder from "../Search/subComponents/SearchPlaceholder";
+import { SliderPlaceholder } from "./subComponents/SliderPlaceholder";
 import SliderVideo from './subComponents/SliderVideo';
 import SliderPagination from './subComponents/SliderPagination';
-import {useDispatch, useSelector} from "react-redux";
-import {updateSliderParams} from "../../redux/actions/actions";
-import {useSwipeable} from "react-swipeable";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSliderParams } from "../../redux/actions/actions";
+import { useSwipeable } from "react-swipeable";
 import './Slider.css';
 
 function debounce(func, ms) {
@@ -19,7 +19,7 @@ function debounce(func, ms) {
   };
 }
 
-function Slider() {
+export function Slider() {
   const loading = useSelector(state => state.isLoading);
   const videos = useSelector(state => state.videos);
   const videosPerPage = useSelector(state => state.sliderParams?.videosPerPage);
@@ -56,7 +56,7 @@ function Slider() {
   }
 
   if (Object.values(videos).length === 0) {
-    return <SearchPlaceholder searchEntity="videos" />
+    return <SliderPlaceholder searchEntity="videos" />
   }
 
   if (videosPerPage === 0) {
@@ -83,5 +83,3 @@ function Slider() {
     </div>
   );
 }
-
-export default Slider;
