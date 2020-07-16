@@ -12,7 +12,7 @@ export const SliderPlaceholder: React.FC<SliderPlaceholderProps> = ({
       <p>
         There is no {searchEntity} yet.
         <br />
-        Try to search something magical
+        Try to search for something magical
         <span role="img" aria-label="stars">
           ✨
         </span>

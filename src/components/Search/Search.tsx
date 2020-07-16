@@ -1,16 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSearchParams } from "../../redux/actions/actions";
+import { updateSearchParams } from "../../redux/actions/searchActions";
 import { searchVideos } from "../../redux/middleware/middleware";
-import { StoreInterface } from "../../redux/store/store-interface";
 import "./Search.css";
+import { AppState } from "../../redux/store/store";
 
 export const Search: React.FC = () => {
-  const searchKeyword = useSelector(
-    (state: StoreInterface) => state.searchParams!.keyword
-  );
+  const searchKeyword = useSelector((state: AppState) => state.search.keyword);
   const nextPageToken = useSelector(
-    (state: StoreInterface) => state.searchParams!.nextPageToken
+    (state: AppState) => state.search.nextPageToken
   );
   const dispatch = useDispatch();
 

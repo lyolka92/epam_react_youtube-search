@@ -3,7 +3,7 @@ import hexToRgba from "hex-to-rgba";
 import styled from "@emotion/styled";
 import { SliderVideoHeader } from "./SliderVideoHeader";
 import { SliderVideoInfo } from "./SliderVideoInfo";
-import { Video } from "../../../redux/store/store-interface";
+import { Video } from "../../../types/Video";
 import "../Slider.css";
 
 const DESCRIPTION_LENGTH = 300;

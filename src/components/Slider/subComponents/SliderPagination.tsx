@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSliderParams } from "../../../redux/actions/actions";
-import { StoreInterface } from "../../../redux/store/store-interface";
+import { setSliderCurrentPage } from "../../../redux/actions/sliderActions";
+import { AppState } from "../../../redux/store/store";
 import "../Slider.css";
 
 export const SliderPagination: React.FC = () => {
   const currentPageNumber = useSelector(
-    (state: StoreInterface) => state.sliderParams.currentPageNumber
+    (state: AppState) => state.slider.currentPageNumber
   );
   const lastAvailablePage = useSelector(
-    (state: StoreInterface) => state.sliderParams.lastAvailablePage
+    (state: AppState) => state.slider.lastAvailablePage
   );
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ export const SliderPagination: React.FC = () => {
   );
 
   const handleClick = (pageNumber: number) =>
-    dispatch(updateSliderParams(pageNumber));
+    dispatch(setSliderCurrentPage(pageNumber));
 
   return (
     <ul className="Slider-pagination__list">

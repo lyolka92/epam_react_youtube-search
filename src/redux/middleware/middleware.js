@@ -1,11 +1,7 @@
-import {
-  toggleLoading,
-  updateSearchParams,
-  updateVideos,
-  setVideos,
-  updateSliderParams,
-} from "../actions/actions";
+import { updateVideos, setVideos } from "../actions/videoActions";
+import { setSliderCurrentPage, toggleLoading } from "../actions/sliderActions";
 import { getVideosByKeyword } from "../../api/search-service";
+import { updateSearchParams } from "../actions/searchActions";
 
 function getVideosPerPage() {
   const screenWidth = window.innerWidth;
@@ -25,26 +21,20 @@ function sliderMiddleware({ getState, dispatch }) {
   return function (next) {
     return function (action) {
       if (action.type === "UPDATE_SLIDER_PARAMS") {
-        const { sliderParams, videos, searchParams } = getState();
-        const videosArray = Object.values(videos);
-        const actionCurrentPageNumber = action.currentPageNumber;
-
+        const { videos } = getState();
         action.videosPerPage = getVideosPerPage();
         action.lastAvailablePage =
-          Math.ceil(videosArray.length / action.videosPerPage) || 1;
-        action.currentPageNumber =
-          Math.min(
-            actionCurrentPageNumber || sliderParams.currentPageNumber,
-            action.lastAvailablePage
-          ) || 1;
-
+          videos.length > 0
+            ? Math.ceil(videos.length / action.videosPerPage)
+            : 1;
+      } else if (action.type === "SET_SLIDER_CURRENT_PAGE") {
+        const { slider, videos, search } = getState();
         if (
-          videosArray.length > 0 &&
-          action.currentPageNumber >= action.lastAvailablePage - 2
+          videos.length > 0 &&
+          slider.lastAvailablePage > 1 &&
+          action.currentPageNumber >= slider.lastAvailablePage - 2
         ) {
-          dispatch(
-            searchVideos(searchParams.keyword, searchParams.nextPageToken)
-          );
+          dispatch(searchVideos(search.keyword, search.nextPageToken));
         }
       }
 
@@ -63,11 +53,9 @@ function searchVideos(searchKeyword, nextPageToken) {
           searchKeyword,
           nextPageToken
         );
-        dispatch(
-          updateSearchParams(searchResult.keyword, searchResult.nextPageToken)
-        );
+        dispatch(updateSearchParams(searchKeyword, searchResult.nextPageToken));
         dispatch(setVideos(searchResult.items));
-        dispatch(updateSliderParams(1));
+        dispatch(setSliderCurrentPage(1));
 
         dispatch(toggleLoading());
       } else {

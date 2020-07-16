@@ -19,8 +19,6 @@
     height: 90%;
 }
 
-/*---*/
-
 .Slider-video__info__author:before {
     content: "👩🏻‍🎤 ";
 }
@@ -32,8 +30,6 @@
 .Slider-video__info__viewCount:before {
     content: "👁‍ ";
 }
-
-/*---*/
 
 .Slider-pagination {
     display: flex;
