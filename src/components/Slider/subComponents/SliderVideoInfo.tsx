@@ -37,7 +37,7 @@ export const SliderVideoInfo: React.FC<SliderVideoInfoProps> = (props) => {
       <ul>
         <li className="slider-video__info__author">{props.videoAuthor}</li>
         <li className="slider-video__info__uploadDate">
-          {props.videoUploadDate}
+          {props.videoUploadDate.toLocaleDateString()}
         </li>
         <li className="slider-video__info__viewCount">
           {props.videoViewCount}

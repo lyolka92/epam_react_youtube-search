@@ -1,3 +1,5 @@
+import { Video } from "../types/Video";
+
 const apiUrl = "https://www.googleapis.com/youtube/v3/";
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -80,10 +82,10 @@ function mapVideosInfo(videos: youTubeVideoWithStats[]) {
 
     const videoUrl = new URL(`https://youtu.be/${id}`);
     const imgUrl = new URL(`${video.snippet?.thumbnails?.high?.url}`);
-    const uploadDate = new Date(publishedAt).toLocaleDateString();
+    const uploadDate = new Date(publishedAt);
     const viewCount = +views;
 
-    return {
+    const result: Video = {
       title,
       author,
       uploadDate,
@@ -93,5 +95,7 @@ function mapVideosInfo(videos: youTubeVideoWithStats[]) {
       videoUrl,
       viewCount,
     };
+
+    return result;
   });
 }

@@ -5,7 +5,7 @@ export const UPDATE_SEARCH_PARAMS = "UPDATE_SEARCH_PARAMS";
 export interface UpdateSearchParamsAction {
   type: typeof UPDATE_SEARCH_PARAMS;
   searchKeyword: string;
-  nextPageToken?: string;
+  nextPageToken: string;
 }
 
 export type SearchActionTypes = UpdateSearchParamsAction;
