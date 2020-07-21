@@ -1,5 +1,5 @@
 import { updateVideos, setVideos } from "../actions/videoActions";
-import { setSliderCurrentPage, toggleLoading } from "../actions/sliderActions";
+import { setSliderCurrentPage, toggleLoading, updateSliderParams } from "../actions/sliderActions";
 import { getVideosByKeyword } from "../../api/search-service";
 import { updateSearchParams } from "../actions/searchActions";
 
@@ -67,6 +67,7 @@ function searchVideos(searchKeyword, nextPageToken) {
           updateSearchParams(searchResult.keyword, searchResult.nextPageToken)
         );
         dispatch(updateVideos(searchResult.items));
+        dispatch(updateSliderParams());
       }
     } catch (error) {
       console.log(error);
