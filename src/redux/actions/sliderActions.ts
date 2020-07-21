@@ -2,7 +2,7 @@ import { AppActions } from "../../types/actions";
 
 export const updateSliderParams = (
   videosPerPage: number = 0,
-  lastAvailablePage: number = 1
+  lastAvailablePage: number = 0
 ): AppActions => {
   return {
     type: "UPDATE_SLIDER_PARAMS",

@@ -69,13 +69,13 @@ export const Slider: React.FC = () => {
   );
 
   return (
-    <div className="Slider" {...swipeHandlers}>
-      <div className="Slider-videos">
+    <div className="slider" {...swipeHandlers}>
+      <div className="slider-videos">
         {currentVideos.map((video) => (
           <SliderVideo videoInfo={video} key={video.id} />
         ))}
       </div>
-      <nav className="Slider-pagination">
+      <nav className="slider-pagination">
         <SliderPagination />
       </nav>
     </div>

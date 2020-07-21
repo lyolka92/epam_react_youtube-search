@@ -27,14 +27,14 @@ export const SliderPagination: React.FC = () => {
     dispatch(setSliderCurrentPage(pageNumber));
 
   return (
-    <ul className="Slider-pagination__list">
+    <ul className="slider-pagination__list">
       {pageNumbersToRender.map((pageNumber) => (
-        <li className="Slider-pagination__item" key={pageNumber}>
+        <li className="slider-pagination__item" key={pageNumber}>
           <button
             className={
               pageNumber === currentPageNumber
-                ? "Slider-pagination__item-button Slider-pagination__item-button__active"
-                : "Slider-pagination__item-button"
+                ? "slider-pagination__item-button slider-pagination__item-button__active"
+                : "slider-pagination__item-button"
             }
             type="button"
             onClick={() => handleClick(pageNumber)}

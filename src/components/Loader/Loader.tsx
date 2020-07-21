@@ -2,7 +2,7 @@ import React from "react";
 
 export const Loader: React.FC = () => {
   return (
-    <div className="Slider Slider__empty">
+    <div className="slider slider__empty">
       <p>
         <span role="img" aria-label="stars">
           ✨

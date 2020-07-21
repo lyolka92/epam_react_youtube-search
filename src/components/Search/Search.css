@@ -1,4 +1,4 @@
-.Search {
+.search {
     position: relative;
     width: 40%;
     min-width: 256px;
@@ -6,7 +6,7 @@
     display: flex;
 }
 
-.Search__input {
+.search__input {
     width: 100%;
     height: 3rem;
     padding: 0 4.25rem 0 1rem;
@@ -22,12 +22,12 @@
     outline: none;
 }
 
-.Search__input::placeholder {
+.search__input::placeholder {
     color: rgba(103,76,193, 0.5);
     font-weight: bold;
 }
 
-.Search__btn {
+.search__btn {
     position: absolute;
     right: 0.25rem;
     height: 3rem;
@@ -39,7 +39,7 @@
     background-color: transparent;
 }
 
-.Search__icon {
+.search__icon {
     display: block;
     width: 100%;
     height: 100%;
@@ -48,6 +48,6 @@
     pointer-events: none;
 }
 
-.Search__btn:hover .Search__icon {
+.search__btn:hover .search__icon {
     fill: rgb(162, 139, 252);
 }

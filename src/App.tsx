@@ -6,14 +6,14 @@ import "./App.css";
 
 export const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App__header">
+    <div className="app">
+      <header className="app__header">
         <Search />
       </header>
       <main>
         <Slider />
       </main>
-      <footer className="App__footer">
+      <footer className="app__footer">
         <Footer />
       </footer>
     </div>

@@ -35,11 +35,11 @@ export const SliderVideoInfo: React.FC<SliderVideoInfoProps> = (props) => {
   return (
     <div css={style}>
       <ul>
-        <li className="Slider-video__info__author">{props.videoAuthor}</li>
-        <li className="Slider-video__info__uploadDate">
+        <li className="slider-video__info__author">{props.videoAuthor}</li>
+        <li className="slider-video__info__uploadDate">
           {props.videoUploadDate}
         </li>
-        <li className="Slider-video__info__viewCount">
+        <li className="slider-video__info__viewCount">
           {props.videoViewCount}
         </li>
       </ul>

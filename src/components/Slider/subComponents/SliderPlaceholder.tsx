@@ -8,7 +8,7 @@ export const SliderPlaceholder: React.FC<SliderPlaceholderProps> = ({
   searchEntity,
 }) => {
   return (
-    <div className="Slider Slider__empty">
+    <div className="slider slider__empty">
       <p>
         There is no {searchEntity} yet.
         <br />

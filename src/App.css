@@ -1,4 +1,4 @@
-.App {
+.app {
   position: relative;
   margin: 0;
   padding: 2rem;
@@ -8,18 +8,18 @@
   font-family: Roboto, sans-serif;
 }
 
-.App > * {
+.app > * {
   margin: 0;
   padding-bottom: 2rem;
 }
 
-.App__header {
+.app__header {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.App__footer {
+.app__footer {
   position: absolute;
   bottom: 2rem;
   width: calc(100% - 4rem);
@@ -31,10 +31,10 @@
   padding-bottom: 0;
 }
 
-.App__footer a {
+.app__footer a {
   color: rgb(103,76,193);
 }
 
-.App__footer a:hover {
+.app__footer a:hover {
   color: rgb(162, 139, 252);
 }

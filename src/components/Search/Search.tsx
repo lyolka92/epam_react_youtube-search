@@ -22,18 +22,18 @@ export const Search: React.FC = () => {
   };
 
   return (
-    <form className="Search" onSubmit={handleSubmit}>
+    <form className="search" onSubmit={handleSubmit}>
       <input
-        className="Search__input"
+        className="search__input"
         type="text"
         placeholder="Search on YouTube 🦄"
         value={searchKeyword}
         onChange={handleChange}
       />
 
-      <button className="Search__btn" type="submit" aria-label="search">
+      <button className="search__btn" type="submit" aria-label="search">
         <svg
-          className="Search__icon"
+          className="search__icon"
           viewBox="0 0 24 24"
           preserveAspectRatio="xMidYMid meet"
           focusable="false"
