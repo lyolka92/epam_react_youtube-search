@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Loader: React.FC = () => {
+export const Loader = () => {
   return (
     <div className="slider slider__empty">
       <p>
