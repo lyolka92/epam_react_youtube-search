@@ -26,13 +26,10 @@ export const Slider: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    function handleResize() {
-      dispatch(updateSliderParams());
-    }
-
+    const handleResize = () => dispatch(updateSliderParams());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  });
+  }, [dispatch]);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => {
