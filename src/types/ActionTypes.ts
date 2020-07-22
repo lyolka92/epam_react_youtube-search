@@ -49,7 +49,22 @@ export type SliderActionTypes =
   | SetSliderCurrentPageAction
   | ToggleLoadingAction;
 
+export const SET_ERROR = "SET_ERROR";
+export const HIDE_ERROR = "HIDE_ERROR";
+
+export interface SetErrorAction {
+  type: typeof SET_ERROR;
+  error: string;
+}
+
+export interface HideErrorAction {
+  type: typeof HIDE_ERROR;
+}
+
+export type ErrorActionTypes = SetErrorAction | HideErrorAction;
+
 export type AppActions =
   | SearchActionTypes
   | VideoActionTypes
-  | SliderActionTypes;
+  | SliderActionTypes
+  | ErrorActionTypes;

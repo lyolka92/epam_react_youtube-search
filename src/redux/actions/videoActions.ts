@@ -9,6 +9,7 @@ import { getVideosByKeyword } from "../../api/search-service";
 import { updateSearchParams } from "./searchActions";
 import { ThunkAction } from "redux-thunk";
 import { AppState } from "../store/store";
+import { hideError, setError } from "./errorActions";
 
 export const setVideos = (videos: Video[]): AppActions => {
   return {
@@ -29,31 +30,45 @@ export const searchVideos = (
   nextPageToken: string
 ): ThunkAction<Promise<string>, AppState, unknown, AppActions> => {
   return async (dispatch) => {
+    const search = async (): Promise<any> => {
+      dispatch(hideError());
+
+      const searchResult = await getVideosByKeyword(
+        searchKeyword,
+        nextPageToken
+      );
+
+      if (searchResult.error) {
+        dispatch(setError(searchResult.error));
+      } else {
+        if (nextPageToken === "") {
+          dispatch(setVideos(searchResult.data!.items));
+          dispatch(setSliderCurrentPage(1));
+        } else {
+          dispatch(updateVideos(searchResult.data!.items));
+        }
+
+        dispatch(
+          updateSearchParams(
+            searchResult.data!.keyword,
+            searchResult.data!.nextPageToken
+          )
+        );
+        dispatch(updateSliderParams());
+      }
+    };
+
+    const callAsyncWithLoader = async (func: () => any): Promise<any> => {
+      dispatch(toggleLoading());
+      await func();
+      dispatch(toggleLoading());
+    };
+
     try {
       if (nextPageToken === "") {
-        dispatch(toggleLoading());
-
-        const searchResult = await getVideosByKeyword(
-          searchKeyword,
-          nextPageToken
-        );
-        dispatch(
-          updateSearchParams(searchResult.keyword, searchResult.nextPageToken)
-        );
-        dispatch(setVideos(searchResult.items));
-        dispatch(setSliderCurrentPage(1));
-
-        dispatch(toggleLoading());
+        await callAsyncWithLoader(search);
       } else {
-        const searchResult = await getVideosByKeyword(
-          searchKeyword,
-          nextPageToken
-        );
-        dispatch(
-          updateSearchParams(searchResult.keyword, searchResult.nextPageToken)
-        );
-        dispatch(updateVideos(searchResult.items));
-        dispatch(updateSliderParams());
+        await search();
       }
     } catch (error) {
       console.log(error);

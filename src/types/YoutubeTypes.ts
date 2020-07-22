@@ -36,7 +36,10 @@ export type YouTubeVideoWithStats = {
 };
 
 export type YouTubeSearchResult = {
-  nextPageToken: string;
-  keyword: string;
-  items: Video[];
+  data?: {
+    nextPageToken: string;
+    keyword: string;
+    items: Video[];
+  };
+  error?: string;
 };

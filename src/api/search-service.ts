@@ -12,42 +12,46 @@ export const getVideosByKeyword = async (
   searchRequest: string,
   pageToken?: string
 ): Promise<YouTubeSearchResult> => {
-  let searchResult;
-
   const pageTokenQuery = pageToken ? `&pageToken=${pageToken}` : "";
   const url = `${apiUrl}search?$key=${apiKey}&type=video&part=snippet&maxResults=15&q=${searchRequest}${pageTokenQuery}`;
 
-  const response = await fetch(url);
+  try {
+    debugger;
+    const response = await fetch(url);
+    const searchResult = await response.json();
 
-  if (response.ok) {
-    searchResult = await response.json();
-  } else {
-    console.log(`HTTP Error in getVideosByKeyword: ${response.status}`);
+    if (response.ok) {
+      const videoIds = searchResult.items.map(
+        (video: YouTubeVideo) => video.id.videoId
+      );
+      const url = `${apiUrl}videos?$key=${apiKey}&id=${videoIds}&part=snippet,statistics`;
+
+      const statsResponse = await fetch(url);
+      const videoStats = await statsResponse.json();
+
+      if (statsResponse.ok) {
+        return {
+          data: {
+            nextPageToken: searchResult.nextPageToken,
+            keyword: searchRequest,
+            items: mapVideosInfo(videoStats.items),
+          },
+        };
+      } else {
+        return {
+          error: videoStats.error.message,
+        };
+      }
+    } else {
+      return {
+        error: searchResult.error.message,
+      };
+    }
+  } catch (error) {
+    return {
+      error: error.message,
+    };
   }
-
-  const videosWithStats = await getVideosStats(searchResult.items);
-
-  return {
-    nextPageToken: searchResult.nextPageToken,
-    keyword: searchRequest,
-    items: videosWithStats,
-  };
-};
-
-const getVideosStats = async (videos: YouTubeVideo[]): Promise<Video[]> => {
-  const videoIds = videos.map((video) => video.id.videoId);
-
-  const url = `${apiUrl}videos?$key=${apiKey}&id=${videoIds}&part=snippet,statistics`;
-  const response = await fetch(url);
-  let videoStats;
-
-  if (response.ok) {
-    videoStats = await response.json();
-  } else {
-    console.log(`HTTP Error in getVideoStatsById: ${response.status}`);
-  }
-
-  return mapVideosInfo(videoStats.items);
 };
 
 const mapVideosInfo = (videos: YouTubeVideoWithStats[]): Video[] => {

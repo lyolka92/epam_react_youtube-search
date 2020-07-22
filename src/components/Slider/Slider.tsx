@@ -11,10 +11,10 @@ import {
 import { useSwipeable } from "react-swipeable";
 import "./Slider.css";
 import { AppState } from "../../redux/store/store";
+import { AppError } from "../AppError/AppError";
 
 export const Slider: React.FC = () => {
   const videos = useSelector((state: AppState) => state.videos);
-
   const loading = useSelector((state: AppState) => state.slider.isLoading);
   const videosPerPage = useSelector(
     (state: AppState) => state.slider.videosPerPage
@@ -22,6 +22,7 @@ export const Slider: React.FC = () => {
   const currentPageNumber = useSelector(
     (state: AppState) => state.slider.currentPageNumber
   );
+  const error = useSelector((state: AppState) => state.error.error);
 
   const dispatch = useDispatch();
 
@@ -48,6 +49,10 @@ export const Slider: React.FC = () => {
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (error !== "") {
+    return <AppError error={error} />;
   }
 
   if (!videos || videos.length === 0) {
