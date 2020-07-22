@@ -37,7 +37,9 @@ export const searchVideos = (
           searchKeyword,
           nextPageToken
         );
-        dispatch(updateSearchParams(searchKeyword, searchResult.nextPageToken));
+        dispatch(
+          updateSearchParams(searchResult.keyword, searchResult.nextPageToken)
+        );
         dispatch(setVideos(searchResult.items));
         dispatch(setSliderCurrentPage(1));
 

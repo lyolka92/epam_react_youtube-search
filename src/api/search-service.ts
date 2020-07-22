@@ -1,13 +1,18 @@
 import { Video } from "../types/Video";
+import {
+  YouTubeSearchResult,
+  YouTubeVideo,
+  YouTubeVideoWithStats,
+} from "../types/YoutubeTypes";
 
 const apiUrl = "https://www.googleapis.com/youtube/v3/";
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export async function getVideosByKeyword(
+export const getVideosByKeyword = async (
   searchRequest: string,
   pageToken?: string
-) {
-  let videos;
+): Promise<YouTubeSearchResult> => {
+  let searchResult;
 
   const pageTokenQuery = pageToken ? `&pageToken=${pageToken}` : "";
   const url = `${apiUrl}search?$key=${apiKey}&type=video&part=snippet&maxResults=15&q=${searchRequest}${pageTokenQuery}`;
@@ -15,28 +20,24 @@ export async function getVideosByKeyword(
   const response = await fetch(url);
 
   if (response.ok) {
-    videos = await response.json();
+    searchResult = await response.json();
   } else {
     console.log(`HTTP Error in getVideosByKeyword: ${response.status}`);
   }
 
-  const videosWithStats = await getVideosStats(videos.items);
+  const videosWithStats = await getVideosStats(searchResult.items);
 
   return {
-    nextPageToken: videos.nextPageToken,
+    nextPageToken: searchResult.nextPageToken,
     keyword: searchRequest,
-    items: mapVideosInfo(videosWithStats.items),
+    items: videosWithStats,
   };
-}
+};
 
-async function getVideosStats(videos: any[]) {
+const getVideosStats = async (videos: YouTubeVideo[]): Promise<Video[]> => {
   const videoIds = videos.map((video) => video.id.videoId);
-  const [videoStats] = await Promise.all([getVideoStatsById(videoIds)]);
-  return videoStats;
-}
 
-async function getVideoStatsById(videoId: any[]) {
-  const url = `${apiUrl}videos?$key=${apiKey}&id=${videoId}&part=snippet,statistics`;
+  const url = `${apiUrl}videos?$key=${apiKey}&id=${videoIds}&part=snippet,statistics`;
   const response = await fetch(url);
   let videoStats;
 
@@ -46,28 +47,10 @@ async function getVideoStatsById(videoId: any[]) {
     console.log(`HTTP Error in getVideoStatsById: ${response.status}`);
   }
 
-  return videoStats;
-}
+  return mapVideosInfo(videoStats.items);
+};
 
-interface youTubeVideoWithStats {
-  id: string;
-  snippet: {
-    publishedAt: string;
-    title: string;
-    description: string;
-    channelTitle: string;
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-  };
-  statistics: {
-    viewCount: string;
-  };
-}
-
-function mapVideosInfo(videos: youTubeVideoWithStats[]) {
+const mapVideosInfo = (videos: YouTubeVideoWithStats[]): Video[] => {
   return videos.map((video) => {
     const {
       title,
@@ -85,7 +68,7 @@ function mapVideosInfo(videos: youTubeVideoWithStats[]) {
     const uploadDate = new Date(publishedAt);
     const viewCount = +views;
 
-    const result: Video = {
+    return {
       title,
       author,
       uploadDate,
@@ -95,7 +78,5 @@ function mapVideosInfo(videos: youTubeVideoWithStats[]) {
       videoUrl,
       viewCount,
     };
-
-    return result;
   });
-}
+};
