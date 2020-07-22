@@ -1,4 +1,4 @@
-import { AppActions } from "../../types/actions";
+import { AppActions } from "../../types/ActionTypes";
 
 export const updateSliderParams = (
   videosPerPage: number = 0,

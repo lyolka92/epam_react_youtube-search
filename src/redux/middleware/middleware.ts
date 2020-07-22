@@ -1,7 +1,7 @@
 import { searchVideos } from "../actions/videoActions";
 import { AppState } from "../store/store";
 import { Dispatch } from "redux";
-import { AppActions } from "../../types/actions";
+import { AppActions } from "../../types/ActionTypes";
 import { ThunkDispatch } from "redux-thunk";
 
 function getVideosPerPage() {

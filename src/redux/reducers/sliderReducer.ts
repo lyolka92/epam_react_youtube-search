@@ -1,4 +1,4 @@
-import { SliderActionTypes } from "../../types/actions";
+import { SliderActionTypes } from "../../types/ActionTypes";
 import { SliderStore } from "../../types/SliderStore";
 
 const initialState: SliderStore = {

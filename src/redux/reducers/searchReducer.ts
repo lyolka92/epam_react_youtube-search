@@ -1,4 +1,4 @@
-import { SearchActionTypes } from "../../types/actions";
+import { SearchActionTypes } from "../../types/ActionTypes";
 import { SearchStore } from "../../types/SearchStore";
 
 const initialState: SearchStore = {

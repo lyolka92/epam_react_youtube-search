@@ -1,4 +1,4 @@
-import { Video } from "./Video";
+import { Video } from "./VideoStore";
 
 export const UPDATE_SEARCH_PARAMS = "UPDATE_SEARCH_PARAMS";
 

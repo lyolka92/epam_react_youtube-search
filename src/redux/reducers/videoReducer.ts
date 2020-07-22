@@ -1,5 +1,5 @@
-import { VideoActionTypes } from "../../types/actions";
-import { Video } from "../../types/Video";
+import { VideoActionTypes } from "../../types/ActionTypes";
+import { Video } from "../../types/VideoStore";
 
 const initialState: Video[] = [];
 

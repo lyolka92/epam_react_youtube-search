@@ -1,5 +1,5 @@
-import { AppActions } from "../../types/actions";
-import { Video } from "../../types/Video";
+import { AppActions } from "../../types/ActionTypes";
+import { Video } from "../../types/VideoStore";
 import {
   setSliderCurrentPage,
   toggleLoading,
